@@ -1,14 +1,37 @@
 <template>
-  <div class="movies">
+  <div class="movies" >
     <h1>movies</h1>
+    <div class="movies-list">
+      <movie-card v-for="movie in movies" :key="movie.id" :movie="movie" />
+    </div>
   </div>
 </template>
 
 <script>
+import  store from '../store/index'
+import { mapGetters } from 'vuex'
+import MovieCard from './MovieCard'
 export default {
   name: 'AppMovies',
-
+  components: {MovieCard},
+  // data(){
+  //   return {
+  //     movies: []
+  //   }
+  // },
+  computed:{
+    ...mapGetters(['movies'])
+  },
+    beforeRouteEnter(to, from, next){
+        //4ti vuex korak
+        // console.log('dispatch action')
+        store.dispatch('fetchMovies').then(()=> {
+            next();
+        })
+        
+    }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -27,4 +50,10 @@ li {
 a {
   color: #42b983;
 }
+.movies-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
 </style>
