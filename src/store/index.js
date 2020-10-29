@@ -5,12 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    movies: []
+    movies: [],
+    searchTerm: '',
+    filteredMovies: []
+    
   },
   mutations: {
     setMovies(state, payload){
       state.movies = payload;
-      console.log('payload ', payload);
+    },
+
+    setSearchText(state, payload){
+      state.searchTerm = payload
     }
   },
   actions: {
@@ -22,8 +28,10 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    movies: (state) => state.movies
-    
+    movies: (state) => state.movies,
+    filteredMovies: (state) => state.movies.filter((movie) => movie.title.toLowerCase().includes(state.searchTerm.toLowerCase())),
+
+
   }
 })
 

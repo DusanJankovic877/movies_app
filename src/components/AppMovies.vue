@@ -2,8 +2,9 @@
   <div class="movies" >
     <h1>movies</h1>
     <div class="movies-list">
-      <movie-card v-for="movie in movies" :key="movie.id" :movie="movie" />
+      <movie-card v-for="movie in filteredMovies" :key="movie.id" :movie="movie" />
     </div>
+  
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
   //   }
   // },
   computed:{
-    ...mapGetters(['movies'])
+    ...mapGetters(['movies', 'filteredMovies'])
   },
     beforeRouteEnter(to, from, next){
         //4ti vuex korak

@@ -1,15 +1,24 @@
 <template>
   <div id="app">
-      <nav class="nav">
-      <router-link class="navbar-brand" to="/movies">Movies</router-link>
 
-      </nav>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <router-link class="navbar-brand" to="/movies">Movies</router-link>
+    <movie-search/>
+  </nav>
+
       <!-- <router-link to="/about">About</router-link> -->
    
     <router-view/>
   </div>
 </template>
-
+<script>
+import MovieSearch from './components/MovieSearch'
+export default {
+  components: {
+    MovieSearch
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
