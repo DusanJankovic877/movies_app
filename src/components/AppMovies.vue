@@ -1,15 +1,23 @@
 <template>
   <div class="movies" >
     <h1>Movies</h1>
+      <h4>Selected Movies {{countMoviesSelected}}</h4>
     <div class="movies-list" v-if="filteredMovies.length">
-      <movie-card v-for="movie in filteredMovies" :key="movie.id" :movie="movie" />
+      <movie-card 
+        v-for="movie in filteredMovies" 
+        :key="movie.id" 
+        :movie="movie" 
+        :isSelected="getIsMoviesSelected(movie)" 
+        @movie-selected="handleMovieSelected"  />
     </div>
     <div v-else class="d-flex justify-content-center">
       <p class="alert alert-danger col-sm-5" style="color:#ff8080;">
         No match found for your search input
       </p>
     </div>
-  
+    <button @click="selectAll">Select all</button>
+    <button @click="deselectAll">Deselect all</button>
+
   </div>
 </template>
 
@@ -20,13 +28,35 @@ import MovieCard from './MovieCard'
 export default {
   name: 'AppMovies',
   components: {MovieCard},
-  // data(){
-  //   return {
-  //     movies: []
-  //   }
-  // },
+  data(){
+    return {
+      selectedMovies: []
+    }
+  },
   computed:{
-    ...mapGetters(['movies', 'filteredMovies'])
+    ...mapGetters(['movies', 'filteredMovies']),
+    countMoviesSelected(){
+      return this.selectedMovies.length;
+    }
+  },
+  methods:{
+    handleMovieSelected(movie){
+      if(this.getIsMoviesSelected(movie)){
+        return;
+      }
+      this.selectedMovies.push(movie);
+    },
+    getIsMoviesSelected(movie){
+   
+      return !!this.selectedMovies.find((m) => m.id == movie.id);
+    
+    },
+    selectAll(){
+      this.selectedMovies = this.filteredMovies;
+    },
+    deselectAll(){
+      this.selectedMovies = [];
+    }
   },
     beforeRouteEnter(to, from, next){
         //4ti vuex korak

@@ -1,7 +1,7 @@
 <template>
-    <div       >
-            <b-card
-     
+  <div >
+    <b-card
+     :class="{'selected': isSelected}"
       no-body
       style="
         max-width: 20rem;
@@ -11,32 +11,47 @@
       img-alt="Image"
       img-top
     >
-      <b-card-body>
+      <b-card-body >
         <b-card-title>{{movie.title}}</b-card-title>
-      </b-card-body>
+      </b-card-body>        
+        <p>{{movie.director}}</p>
+        <p>{{movie.releaseDate}}</p>
+        <p>{{movie.duration}}</p>
+        <p>{{movie.genre}}</p>
 
-      <b-list-group flush>
-        <b-list-group-item>{{movie.director}}</b-list-group-item>
-        <b-list-group-item>{{movie.releaseDate}}</b-list-group-item>
-        <b-list-group-item>{{movie.duration}}</b-list-group-item>
-        <b-list-group-item>{{movie.genre}}</b-list-group-item>
-      </b-list-group>
-      <b-card-body>
-        <a href="#" class="card-link">Select</a>
-        <a href="#" class="card-link">Edit</a>
-        <a href="#" class="card-link">Delete</a>
+
+      <b-card-body >
+        <a href="#" class="btn btn-primary" @click="handleSelect">Select</a>
+        <a href="#" class="btn btn-success">Edit</a>
+        <a href="#" class="btn btn-danger">Delete</a>
       </b-card-body>
     </b-card>
-    </div>
+  </div>
 </template>
 <script>
 export default {
     name: 'MovieCard',
+    // data(){
+    //   return{
+    //     isSelected: false
+    //   }
+    // },
     props: {
-        movie: Object
+        movie: Object,
+        isSelected: Boolean
+    },
+    methods: {
+      handleSelect(){
+        // this.isSelected = true;
+        this.$emit('movie-selected', this.movie);
+        
+      }
     }
 }
 </script>
 <style scoped>
 img{height:400px;} 
+.selected{
+  background-color: gray;
+}
 </style>
