@@ -4,7 +4,8 @@
      :class="{'selected': isSelected}"
       no-body
       style="
-        max-width: 20rem;
+        max-width: 13rem;
+        
         margin-left: 10px
       "
       :img-src="movie.imageUrl"
@@ -21,9 +22,11 @@
 
 
       <b-card-body >
-        <a href="#" class="btn btn-primary" @click="handleSelect">Select</a>
-        <a href="#" class="btn btn-success">Edit</a>
-        <a href="#" class="btn btn-danger">Delete</a>
+        <a class="btn btn-primary" v-if="isSelected == false" @click="handleSelect">Select</a>&nbsp;
+        <a class="btn btn-primary" v-else @click="deselect">Deselect</a>&nbsp;
+
+        <a class="btn btn-success">Edit</a>&nbsp;
+        <a class="btn btn-danger">Delete</a>
       </b-card-body>
     </b-card>
   </div>
@@ -45,6 +48,10 @@ export default {
         // this.isSelected = true;
         this.$emit('movie-selected', this.movie);
         
+      },
+      deselect(){
+        this.$emit('movie-deselected', this.movie);
+
       }
     }
 }

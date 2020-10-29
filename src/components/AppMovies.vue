@@ -2,21 +2,34 @@
   <div class="movies" >
     <h1>Movies</h1>
       <h4>Selected Movies {{countMoviesSelected}}</h4>
+      <div class="row">
+        <div class="select ">
+          <button class="btn btn-primary" @click="selectAll">Select all</button>&nbsp;
+          <button class="btn btn-primary" @click="deselectAll">Deselect all</button>
+        </div>
+        <div class="sort ml-auto">
+          <button class="btn btn-primary" @click="setSortingCriteria('title')">Title</button>&nbsp;
+          <button class="btn btn-primary" @click="setSortingCriteria('duration')">Duration</button>&nbsp;
+          <button class="btn btn-warning" @click="setSortingDirection(-1)">Asc</button>&nbsp;
+          <button class="btn btn-warning" @click="setSortingDirection(1)">Dsc</button>
+        </div>
+      </div>
     <div class="movies-list" v-if="filteredMovies.length">
+      
       <movie-card 
-        v-for="movie in filteredMovies" 
-        :key="movie.id" 
+        v-for="movie in moviesPage" :key="movie.id" 
         :movie="movie" 
         :isSelected="getIsMoviesSelected(movie)" 
-        @movie-selected="handleMovieSelected"  />
+        @movie-selected="handleMovieSelected"
+        @movie-deselected="deselectMovie"/>
     </div>
     <div v-else class="d-flex justify-content-center">
       <p class="alert alert-danger col-sm-5" style="color:#ff8080;">
         No match found for your search input
       </p>
     </div>
-    <button @click="selectAll">Select all</button>
-    <button @click="deselectAll">Deselect all</button>
+    <pagination :num-of-items="sortList.length" @current-page-changed="goToPage"/>
+
 
   </div>
 </template>
@@ -25,19 +38,41 @@
 import  store from '../store/index'
 import { mapGetters } from 'vuex'
 import MovieCard from './MovieCard'
+import Pagination from './Pagination'
+const PAGE_SIZE = 5;
 export default {
   name: 'AppMovies',
-  components: {MovieCard},
+  components: {
+    MovieCard,
+    Pagination
+    },
   data(){
     return {
-      selectedMovies: []
+      selectedMovies: [],
+      sortingCriteria: '',
+      sortingDirection: '',
+      currentPage: 1
+
     }
   },
   computed:{
     ...mapGetters(['movies', 'filteredMovies']),
     countMoviesSelected(){
       return this.selectedMovies.length;
+    },
+    sortList(){
+      return this
+              .filteredMovies
+              .map((m) => m)
+              .sort((movieA, movieB) => 
+              movieA[this.sortingCriteria] < movieB[this.sortingCriteria] 
+              ? this.sortingDirection : -1 * this.sortingDirection)
+    },
+    moviesPage(){
+      return this.sortList.slice((this.currentPage - 1) * PAGE_SIZE, this.currentPage * PAGE_SIZE);
     }
+
+    
   },
   methods:{
     handleMovieSelected(movie){
@@ -47,20 +82,31 @@ export default {
       this.selectedMovies.push(movie);
     },
     getIsMoviesSelected(movie){
-   
       return !!this.selectedMovies.find((m) => m.id == movie.id);
-    
     },
     selectAll(){
       this.selectedMovies = this.filteredMovies;
     },
     deselectAll(){
       this.selectedMovies = [];
+    },
+    deselectMovie(movie){
+      const F_MOVIE = this.selectedMovies.find((m) => m.id == movie.id);
+      const INDEX = this.selectedMovies.indexOf(F_MOVIE);
+      this.selectedMovies.splice(INDEX, 1);
+    },
+    setSortingCriteria(field){
+      this.sortingCriteria = field;
+    },
+    setSortingDirection(direction){
+      this.sortingDirection = direction;
+
+    },
+    goToPage(page){
+      this.currentPage = page
     }
   },
     beforeRouteEnter(to, from, next){
-        //4ti vuex korak
-        // console.log('dispatch action')
         store.dispatch('fetchMovies').then(()=> {
             next();
         })

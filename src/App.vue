@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="container" id="app">
 
   <nav class="navbar navbar-expand-lg navbar-light">
     <router-link class="navbar-brand" to="/movies">Movies</router-link>
