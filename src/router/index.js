@@ -21,6 +21,11 @@ const routes = [
     name: 'movie-add',
     component: AddMovie
   },
+  {
+    path: '/editMovie/:id',
+    name: 'movie-edit',
+    component: AddMovie
+  },
 
 ]
 

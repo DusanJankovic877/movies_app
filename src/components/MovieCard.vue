@@ -26,8 +26,10 @@
         <a class="btn btn-primary" v-if="isSelected == false" @click="handleSelect">Select</a>&nbsp;
         <a class="btn btn-primary" v-else @click="deselect">Deselect</a>&nbsp;
 
-        <a class="btn btn-success">Edit</a>&nbsp;
-        <a class="btn btn-danger">Delete</a>
+      
+        <router-link class="btn btn-success" :to="{name: 'movie-edit', params: {id: movie.id}}">Edit</router-link>&nbsp;
+
+        <a class="btn btn-danger" @click="deleteMovie">Delete</a>
       </b-card-body>
     </b-card>
   </div>
@@ -48,11 +50,9 @@ export default {
       handleSelect(){
         // this.isSelected = true;
         this.$emit('movie-selected', this.movie);
-        
       },
       deselect(){
         this.$emit('movie-deselected', this.movie);
-
       }
     }
 }
