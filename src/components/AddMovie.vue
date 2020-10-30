@@ -63,7 +63,7 @@ export default {
         ...mapActions(['addMovie','fetchMovieById', 'editMovie']),
         onSubmit(){
             if(!this.$route.params.id){
-                console.log(working);
+              
                 this.addMovie(this.movieAdd);
                 this.$router.push('/movies');
             }else{
@@ -73,8 +73,13 @@ export default {
         },
   
     },
-    async created(){
-            await store.dispatch('fetchMovieById', this.$route.params.id)
+    created(){
+   
+        if(this.$route.name !== 'movie-add'){
+            store.dispatch('fetchMovieById', this.$route.params.id)
+
+        }
+       
     }
 }
 </script>

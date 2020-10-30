@@ -15,13 +15,17 @@ class MovieService {
         return movie;
     }
     async addMovie(movie){
-        // console.log('working');
+       
         const { data } = await this.apiClient.post('/movies', movie)
         return data;
     }
     async editMovie(movie){
             const editedMovie = await this.apiClient.put(`/movies/${movie.id}`, movie);
             return editedMovie;
+    }
+    async deleteMovie(id){
+      const deletedMovie =  await this.apiClient.delete(`/movies/${id}`);
+      console.log(deletedMovie);
     }
 }
 const movieService = new MovieService();

@@ -21,7 +21,8 @@
         :movie="movie" 
         :isSelected="getIsMoviesSelected(movie)" 
         @movie-selected="handleMovieSelected"
-        @movie-deselected="deselectMovie"/>
+        @movie-deselected="deselectMovie"
+        @delete-movie="handleDelete"/>
     </div>
     <div v-else class="d-flex justify-content-center">
       <p class="alert alert-danger col-sm-5" style="color:#ff8080;">
@@ -36,7 +37,7 @@
 
 <script>
 import  store from '../store/index'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import MovieCard from './MovieCard'
 import Pagination from './Pagination'
 const PAGE_SIZE = 5;
@@ -104,6 +105,11 @@ export default {
     },
     goToPage(page){
       this.currentPage = page
+    },
+    ...mapActions(['deleteMovie']),
+    handleDelete(id){
+      this.deleteMovie(id);
+      
     }
   },
     beforeRouteEnter(to, from, next){

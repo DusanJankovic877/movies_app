@@ -41,13 +41,17 @@ export default new Vuex.Store({
       state.commit('setMovie', data);
     },
     async addMovie(state, payload){
-      console.log('working');
+ 
       const newMovie = await movieService.addMovie(payload);
       state.commit('addMovie', newMovie);
     },
     async editMovie(state, payload){
       await movieService.editMovie(payload);
-      
+    },
+    async deleteMovie(state, payload){
+      await movieService.deleteMovie(payload);
+      const { data } = await movieService.getAll();
+      state.commit('setMovies', data);
     }
   
   },

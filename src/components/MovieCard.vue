@@ -35,6 +35,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 export default {
     name: 'MovieCard',
     // data(){
@@ -47,12 +48,14 @@ export default {
         isSelected: Boolean
     },
     methods: {
-      handleSelect(){
-        // this.isSelected = true;
+      handleSelect(){    
         this.$emit('movie-selected', this.movie);
       },
       deselect(){
         this.$emit('movie-deselected', this.movie);
+      },
+      deleteMovie(){
+        this.$emit('delete-movie', this.movie.id);
       }
     }
 }
