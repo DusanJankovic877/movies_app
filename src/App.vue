@@ -2,7 +2,8 @@
   <div class="container" id="app">
 
   <nav class="navbar navbar-expand-lg navbar-light">
-    <router-link class="navbar-brand" to="/movies">Movies</router-link>
+    <router-link class="navbar-brand" to="movies">Movies</router-link>
+    <router-link :to="{name: 'movie-add'}">Add Movie</router-link>
     <movie-search/>
   </nav>
 

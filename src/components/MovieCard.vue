@@ -6,6 +6,7 @@
       style="
         max-width: 13rem;
         
+        
         margin-left: 10px
       "
       :img-src="movie.imageUrl"
@@ -57,7 +58,7 @@ export default {
 }
 </script>
 <style scoped>
-img{height:400px;} 
+img{height:300px;} 
 .selected{
   background-color: gray;
 }

@@ -17,6 +17,9 @@ export default new Vuex.Store({
 
     setSearchText(state, payload){
       state.searchTerm = payload
+    },
+    addMovie(state, payload){
+      state.movies.push(payload);
     }
   },
   actions: {
@@ -25,13 +28,15 @@ export default new Vuex.Store({
       state.commit('setMovies', data);
       // console.log(movies);
       
+    },
+    async addMovie(state, payload){
+      const newMovie = await movieService.addMovie(payload);
+      state.commit('addMovie', newMovie);
     }
   },
   getters: {
     movies: (state) => state.movies,
     filteredMovies: (state) => state.movies.filter((movie) => movie.title.toLowerCase().includes(state.searchTerm.toLowerCase())),
-
-
   }
 })
 
