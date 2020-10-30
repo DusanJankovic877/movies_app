@@ -20,15 +20,10 @@
         <p>{{movie.releaseDate}}</p>
         <p>{{movie.duration}}</p>
         <p>{{movie.genre}}</p>
-
-
       <b-card-body >
         <a class="btn btn-primary" v-if="isSelected == false" @click="handleSelect">Select</a>&nbsp;
         <a class="btn btn-primary" v-else @click="deselect">Deselect</a>&nbsp;
-
-      
         <router-link class="btn btn-success" :to="{name: 'movie-edit', params: {id: movie.id}}">Edit</router-link>&nbsp;
-
         <a class="btn btn-danger" @click="deleteMovie">Delete</a>
       </b-card-body>
     </b-card>
@@ -38,11 +33,6 @@
 import { mapActions } from 'vuex';
 export default {
     name: 'MovieCard',
-    // data(){
-    //   return{
-    //     isSelected: false
-    //   }
-    // },
     props: {
         movie: Object,
         isSelected: Boolean

@@ -17,7 +17,6 @@ export default new Vuex.Store({
     setMovies(state, payload){
       state.movies = payload;
     },
-
     setSearchText(state, payload){
       state.searchTerm = payload
     },
@@ -26,8 +25,6 @@ export default new Vuex.Store({
     },
     setMovie(state, payload){
       state.movie = payload;
-    
-
     }
 
   },

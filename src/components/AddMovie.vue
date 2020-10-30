@@ -39,7 +39,6 @@
 </template>
 <script>
 import  store from '../store/index'
-
 import { mapActions, mapGetters } from 'vuex'
 import movieService from '../services/movieService';
 export default {
@@ -71,15 +70,12 @@ export default {
                 this.$router.push('/movies');
             }
         },
-  
     },
     created(){
    
         if(this.$route.name !== 'movie-add'){
             store.dispatch('fetchMovieById', this.$route.params.id)
-
         }
-       
     }
 }
 </script>

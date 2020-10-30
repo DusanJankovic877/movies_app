@@ -30,8 +30,6 @@
       </p>
     </div>
     <pagination :num-of-items="sortList.length" @current-page-changed="goToPage"/>
-
-
   </div>
 </template>
 

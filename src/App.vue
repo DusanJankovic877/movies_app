@@ -6,9 +6,6 @@
     <router-link :to="{name: 'movie-add'}">Add Movie</router-link>
     <movie-search/>
   </nav>
-
-      <!-- <router-link to="/about">About</router-link> -->
-   
     <router-view/>
   </div>
 </template>
